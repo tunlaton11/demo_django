@@ -8,8 +8,17 @@ def home(request):
 
 
 
-def about(request):    
-    return render(request, "main.html")
+def about(request):
+    return render(request, "about.html")
+
+
+def contact(request):
+    contact = {
+                "Name": "Tunlaton Wongchai",
+                "Email": "tunlaton11@gmail.com",
+                "Tel.": "0640656605"
+            }
+    return render(request, "contact.html", {"contact":contact})
 
 
 

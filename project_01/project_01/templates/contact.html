@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Contact page{% endblock %}
+
+{% block content %}
+    <h1>This is my contact detail</h1>
+    {% for key, value in contact.items %}
+        <p>{{ key }} : {{ value }}</p>
+
+    {% endfor %}
+
+    <img src="{% static 'me.jpg' %}" width="256px" height="256px">
+{% endblock %}
