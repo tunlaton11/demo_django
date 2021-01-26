@@ -1,4 +1,16 @@
-from django.http import HttpResponse
+
+from django.shortcuts import render
 
 def home(request):
-    return HttpResponse("Hello World")
+    data = {"name" : "tun", "age" : 20, "gender" : "male"}
+
+    return render(request, "index.html",  {"data": data})
+
+
+
+def about(request):    
+    return render(request, "main.html")
+
+
+
+
