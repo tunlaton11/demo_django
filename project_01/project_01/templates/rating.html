@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+
+{% block title %}Rating page{% endblock %}
+
+{% block content %}
+    <h1>Feedback to us</h1>
+    <form class="row g-3">
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail4">
+        </div>
+        <div class="col-md-6">
+            <label for='phone' class="form-label">Tel</label>
+            <input type='tel' class="form-control" id="phone">
+        </div>
+        
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Comment</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        
+        <div class="col-md-4">
+            <label for="inputState" class="form-label">Rating</label>
+            <select id="inputState" class="form-select">
+                <option selected>Choose...</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>    
+        </div>
+        <div class="col-12">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+{% endblock %}

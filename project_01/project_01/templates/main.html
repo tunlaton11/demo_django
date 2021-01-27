@@ -24,7 +24,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark"
-            style="background-color:#273746 ;">
+            style="background: linear-gradient(to right, #014871 30%, #88f1cb 100%) ;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'home' %}"
                     style="font-family:Fira Code">TUN-DEV</a>
@@ -44,6 +44,9 @@
                             <a class="nav-link active" href="{% url 'about' %}">About</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'rating' %}">Rating</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" href="{% url 'contact'%}">Contact</a>
                         </li>
                     </ul>
@@ -61,8 +64,7 @@
 
 
             </nav>
-            <div class='container' style='margin: 50px
-                auto;background-color:#B6D0E2; border: 2px solid black'>
+            <div class='container' style='padding: 20px; margin: 40px auto;background-color:#dfedf7;border-radius:20px ;'>
                 {% block content %}
                 {% endblock %}
             </div>

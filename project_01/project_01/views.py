@@ -20,6 +20,9 @@ def contact(request):
             }
     return render(request, "contact.html", {"contact":contact})
 
+def rating(request):
+    return render(request, "rating.html")
+
 
 
 
