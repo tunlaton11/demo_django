@@ -24,5 +24,18 @@ def rating(request):
     return render(request, "rating.html")
 
 
+def result(request):
+    email = request.POST['email']
+    tel = request.POST['tel']
+    comment = request.POST['comment']
+    rate = request.POST['rate']
+    return render(request, "result.html", {
+                                            'email': email,
+                                            'tel': tel,
+                                            'comment': comment,
+                                            'rate': rate
+                                            })
+
+
 
 

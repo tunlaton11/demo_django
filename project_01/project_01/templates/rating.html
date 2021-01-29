@@ -4,34 +4,36 @@
 
 {% block content %}
     <h1>Feedback to us</h1>
-    <form class="row g-3">
+    <form class="row g-3" method='post' action={% url 'result'%}>
+        {% csrf_token %}
         <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail4">
+            <input type="email" class="form-control" id="inputEmail4" name='email'>
         </div>
         <div class="col-md-6">
             <label for='phone' class="form-label">Tel.</label>
-            <input type='tel' class="form-control" id="phone">
+            <input type='tel' class="form-control" id="phone" name='tel'>
         </div>
         
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Comment</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name='comment'></textarea>
         </div>
         
         <div class="col-md-4">
             <label for="inputState" class="form-label">Rating</label>
-            <select id="inputState" class="form-select">
+            <select id="inputState" class="form-select" name='rate'>
                 <option selected>Choose...</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>    
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            
         </div>
         <div class="col-12">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button value ='Submit' type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 {% endblock %}

@@ -1,5 +1,5 @@
 # Prog-02: Elastic Collision
-# 6330427821 Name Poom Siripujaka
+# 6???????21 Name ?
 
 import math
 import random
@@ -63,19 +63,20 @@ def update_v(x1, y1, r1, v1x, v1y,
     
     zeta1 = math.acos(v1x/v1) # เอา math.radians ออก
     zeta2 = math.acos(v2x/v2)
-    phi = math.atan((y2-y1)/(x2-x1))
+    phi = math.atan2((y2-y1),(x2-x1))
     
     
-   
+
 
 
     
     v1_x = ((v1*math.cos(zeta1-phi)*(m1-m2)+2*m2*v2*math.cos(zeta2-phi)) / (m1+m2))*math.cos(phi)+v1*math.sin(zeta1-phi)* math.cos(phi+math.pi/2)
     v1_y = ((v1*math.cos(zeta1-phi)*(m1-m2)+2*m2*v2*math.cos(zeta2-phi)) / (m1+m2))*math.sin(phi)+v1*math.sin(zeta1-phi)* math.sin(phi+math.pi/2)
-    v2_x = ((v2*math.cos(zeta2-phi)*(m2-m1)+2*m1*v1*math.cos(zeta2-phi)) / (m1+m2))*math.cos(phi)+v1*math.sin(zeta2-phi)* math.cos(phi+math.pi/2)
-    v2_y = ((v2*math.cos(zeta2-phi)*(m2-m1)+2*m1*v1*math.cos(zeta2-phi)) / (m1+m2))*math.sin(phi)+v1*math.sin(zeta2-phi)* math.sin(phi+math.pi/2)
+    v2_x = ((v2*math.cos(zeta2-phi)*(m2-m1)+2*m1*v1*math.cos(zeta1-phi)) / (m1+m2))*math.cos(phi)+v2*math.sin(zeta2-phi)* math.cos(phi+math.pi/2)
+    v2_y = ((v2*math.cos(zeta2-phi)*(m2-m1)+2*m1*v1*math.cos(zeta1-phi)) / (m1+m2))*math.sin(phi)+v2*math.sin(zeta2-phi)* math.sin(phi+math.pi/2)
 
-    return (v1_x, v1_y), (v2_x, v2_y)
+    
+    return (random, random), (random, random)
 
 def move(ball):
     x, y = ball.center
@@ -105,7 +106,7 @@ def total_Ek():
 def animate(i):
     for i in range(len(balls)):
         move(balls[i])
-    print(total_Ek())        
+    #print(total_Ek())        
     for i in range(len(balls)):
         for j in range(i+1, len(balls)):
             update_v_if_collide(balls[i], balls[j])

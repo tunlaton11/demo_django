@@ -4,16 +4,18 @@
 {% block title %}Contact page{% endblock %}
 
 {% block content %}
-    <div class="card" style="width: 22rem; margin: auto;">
-        <img src="{% static 'me.jpg' %}" class ='card-img-top'alt="me"'>
-        <div class="card-body">
-            <h5 class="card-title">My contact detail</h5>
-            <ul>
-            {% for key ,value in contact.items %}                
-                <p class="card-text"><li>{{ key }} : {{value }}</li></p>                
-            {% endfor %}
-            </ul>
-        </div>
+    <div class="d-flex">
+        <div class="card" style="width: 22rem; margin: auto;height: auto;">
+            <img src="{% static 'me.jpg' %}" class ='card-img-top' alt="me">
+            <div class="card-body">
+                <h5 class="card-title" style='text-align:center'>My contact detail</h5>
+                <ul>
+                {% for key ,value in contact.items %}                
+                    <p class="card-text"><li>{{ key }} : {{value }}</li></p>                
+                {% endfor %}
+                </ul>
+            </div>
 
+        </div>
     </div>
 {% endblock %}

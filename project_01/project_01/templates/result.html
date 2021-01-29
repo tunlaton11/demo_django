@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+{% block title %}Result page{% endblock %}
+
+{% block content %}
+    <h1>Rating Result</h1>
+    <form class="row g-3" method='post' action={% url 'result'%}>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail4" value={{ email }} name='email' disabled>
+        </div>
+        <div class="col-md-6">
+            <label for='phone' class="form-label">Tel.</label>
+            <input type='tel' class="form-control" id="phone" value={{ tel }} name='tel' disabled>
+        </div>
+        
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Comment</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" value={{ comment }} rows="3" name='comment' disabled>{{ comment }}</textarea>
+        </div>
+        
+        <div class="col-md-4">
+            <label for="inputState" class="form-label">Rating</label>
+            <input type='rate' class="form-control" id="rate" value={{ rate }} value={{ rate }} name='Rating' disabled>
+
+            
+        </div>
+
+    </form>
+{% endblock %}
