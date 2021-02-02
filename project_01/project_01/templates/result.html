@@ -4,7 +4,8 @@
 
 {% block content %}
     <h1>Rating Result</h1>
-    <form class="row g-3" method='post' action={% url 'result'%}>
+    <form class="row g-3" method='post' action={% url 'home'%}>
+        {% csrf_token %}
         <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Email</label>
             <input type="email" class="form-control" id="inputEmail4" value={{ email }} name='email' disabled>
@@ -25,6 +26,7 @@
 
             
         </div>
-
+        <div class="col-12">
+            <button value ='Submit' type="submit" class="btn btn-primary">Back</button>
     </form>
 {% endblock %}

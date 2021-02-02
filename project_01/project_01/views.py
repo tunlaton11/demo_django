@@ -1,10 +1,11 @@
 
 from django.shortcuts import render
+from database.models import Rating
 
-def home(request):
-    data = {"name" : "tun", "age" : 20, "gender" : "male"}
 
-    return render(request, "index.html",  {"data": data})
+def home(request):    
+
+    return render(request, "index.html")
 
 
 
@@ -28,13 +29,16 @@ def result(request):
     email = request.POST['email']
     tel = request.POST['tel']
     comment = request.POST['comment']
-    rate = request.POST['rate']
+    rate = request.POST['rate']    
+    add = Rating(email=email, tel=tel, comment=comment, rating=rate)    
+    add.save()  
     return render(request, "result.html", {
                                             'email': email,
                                             'tel': tel,
                                             'comment': comment,
                                             'rate': rate
                                             })
+
 
 
 
