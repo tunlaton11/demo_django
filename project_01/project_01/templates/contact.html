@@ -4,8 +4,8 @@
 {% block title %}Contact page{% endblock %}
 
 {% block content %}
-    <div class="d-flex">
-        <div class="card" style="width: 22rem; margin: auto;height: auto;">
+    <div class="d-flex" style='margin: 40px'>
+        <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 22rem; margin: auto;height: auto;">
             <img src="{% static 'me.jpg' %}" class ='card-img-top' alt="me">
             <div class="card-body">
                 <h5 class="card-title" style='text-align:center'>My contact detail</h5>
@@ -14,6 +14,7 @@
                     <p class="card-text"><li>{{ key }} : {{value }}</li></p>                
                 {% endfor %}
                 </ul>
+                
             </div>
 
         </div>

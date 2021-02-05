@@ -1,6 +1,7 @@
 
-from django.shortcuts import render
-from database.models import Rating
+from django.shortcuts import render, redirect
+from database.models import Rating, Member
+from django.contrib import messages
 
 
 def home(request):    
@@ -24,6 +25,29 @@ def contact(request):
 def rating(request):
     return render(request, "rating.html")
 
+def signup(request):
+    return render(request, "register.html")
+
+def register(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    comfirm = request.POST['comfirmpassword']
+    nickname = request.POST['nickname']
+    if password == comfirm:
+        if Member.objects.filter(username=username).exists():
+            messages.info(request, 'This Username is already exist')
+            return redirect('/register')
+        else:
+            user = Member(username=username, password=password,nickname=nickname)    
+            user.save() 
+            return render(request, "success.html")
+
+    else:
+        messages.info(request, 'Password is not match')
+        return redirect('/register')
+    
+    
+
 
 def result(request):
     email = request.POST['email']
@@ -38,6 +62,7 @@ def result(request):
                                             'comment': comment,
                                             'rate': rate
                                             })
+
 
 
 

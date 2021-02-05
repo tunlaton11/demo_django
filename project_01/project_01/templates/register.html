@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+
+{% block title %}Register page{% endblock %}
+
+{% block content %}
+<div class="d-flex" style="margin :40px">
+    <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 22rem; margin: auto;height: auto;">        
+        <div class="card-body">
+            <h5 class="card-title" style='text-align:center'>Register</h5>
+            {% if messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                <strong>Alert!!</strong> {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                {% endfor %}
+            </div>
+
+            {% endif %}
+
+
+
+            <form class="row g-3" method='post' action={% url 'success'%}>
+                {% csrf_token %}
+                <div class="col-md-12">
+                    <label for="inputEmail" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="inputEmail" name='username'>
+                </div>
+                <div class="col-md-12">
+                    <label for="inputPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" name='password'>
+                </div>
+                <div class="col-md-12">
+                    <label for="confirmpassword" class="form-label">Comfirm Password</label>
+                    <input type="password" class="form-control" id="comfirmPassword" name='comfirmpassword'>
+                </div>
+                <div class="col-md-12">
+                    <label  class="form-label">Nickname</label>
+                    <input type="text" class="form-control" id="inputNickname" name='nickname'>
+                </div>
+                <div class="col-12">
+                    <button value ='Submit' type="submit" class="btn btn-primary" >Submit</button>
+                </div>
+            </form>
+                
+            
+        </div>
+
+    </div>
+</div>
+{% endblock %}
