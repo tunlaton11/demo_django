@@ -122,9 +122,8 @@ def shuffle(deck):
     rear_deck = deck.replace(front_deck, "")
     front_split = list(filter(("").__ne__,front_deck.split("|")))
     rear_split = list(filter(("").__ne__,rear_deck.split("|")))
-    new_deck = [item for pair in zip(front_split, rear_split + [0]) for item in pair] 
-    if new_deck[-1] == 0:
-        del new_deck[-1]
+    new_deck = [None] * (len(front_split) + len(rear_split))
+    new_deck[::2], new_deck[1::2] = front_split, rear_split
 
     new_deck = "|" + '||'.join(new_deck) + "|"
 
@@ -132,16 +131,13 @@ def shuffle(deck):
     return new_deck
 #---------------------------------------
 def show_table_cards(cards, m):
-    card_split = cards.index("|", m*-4 % len(cards))
-    if m * 4 >= len(cards):
-        card = cards
-        print("-"*7 + "-"*len(cards))
-        print("Table:", card)
-        print("-"*7 + "-"*len(cards))
-    else:
-        card = "..." + cards[card_split:]
-        print("-"*10 + "-"*len(cards[card_split:]))
-        print("Table:", card)
-        print("-"*10 + "-"*len(cards[card_split:]))
+    right_card = cards[(m * -4):]
+    space_range = int(len(cards) / 4) - m
+    check_dot = int((space_range*2)//((space_range*2)-0.1))
+    fill_line = int(len(right_card)/4) + check_dot
+
+    print('-------'+'----'*fill_line)
+    print('Table: '+'....'*check_dot + right_card)
+    print('-------'+'----'*fill_line)
 #-----------------------------------------    
 play(51)
