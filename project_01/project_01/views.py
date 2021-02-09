@@ -2,43 +2,63 @@
 from django.shortcuts import render, redirect
 from database.models import Rating, Member
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
-
-def home(request):    
-
+def home(request):
     return render(request, "index.html")
 
 
 
 def about(request):
-    return render(request, "about.html")
-
-
-def contact(request):
     contact = {
                 "Name": "Tunlaton Wongchai",
                 "Email": "tunlaton11@gmail.com",
                 "Tel.": "0640656605"
             }
-    return render(request, "contact.html", {"contact":contact})
+    return render(request, "about.html", {"contact":contact})
 
-def rating(request):
-    return render(request, "rating.html")
+
+def contact(request):   
+    return render(request, "contact.html")
+
 
 def signup(request):
     return render(request, "register.html")
 
-def register(request):
+def log_in(request):
+    return render(request, "login.html")
+
+def log_out(request):
+    logout(request)
+    return redirect('/')
+
+
+def login_check(request):
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        login(request,user)
+        return redirect('/')
+    else:
+        messages.info(request,"Username or Password is invalid")
+        return redirect('/login')
+
+
+def register_check(request):
     username = request.POST['username']
     password = request.POST['password']
     comfirm = request.POST['comfirmpassword']
     nickname = request.POST['nickname']
     if password == comfirm:
-        if Member.objects.filter(username=username).exists():
+        if User.objects.filter(username=username).exists():
             messages.info(request, 'This Username is already exist')
             return redirect('/register')
         else:
-            user = Member(username=username, password=password,nickname=nickname)    
+            user = User.objects.create_user(username=username, password=password,first_name=nickname)    
             user.save() 
             return render(request, "success.html")
 
@@ -48,20 +68,6 @@ def register(request):
     
     
 
-
-def result(request):
-    email = request.POST['email']
-    tel = request.POST['tel']
-    comment = request.POST['comment']
-    rate = request.POST['rate']    
-    add = Rating(email=email, tel=tel, comment=comment, rating=rate)    
-    add.save()  
-    return render(request, "result.html", {
-                                            'email': email,
-                                            'tel': tel,
-                                            'comment': comment,
-                                            'rate': rate
-                                            })
 
 
 
