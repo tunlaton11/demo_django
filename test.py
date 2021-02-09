@@ -17,3 +17,6 @@ def shuffle(deck):
     return new_deck
 
 print(shuffle("|2H||3H||4H||5H||6H||7H||8H||9H||TH||JH||QH||KH||AH|"))
+
+x = "|2H||3H||4H||5H||6H||7H||8H||9H||TH||JH||QH||KH||AH|"
+print(x.split("|"))
