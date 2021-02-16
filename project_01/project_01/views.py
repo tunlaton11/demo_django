@@ -14,7 +14,7 @@ def about(request):
     contact = {
                 "Name": "Tunlaton Wongchai",
                 "Email": "tunlaton11@gmail.com",
-                "Tel.": "0640656605"
+                "Tel.": "064-065-6605"
             }
     return render(request, "about.html", {"contact":contact})
 
