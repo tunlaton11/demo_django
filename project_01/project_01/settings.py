@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'm)5&hx^b&@zznzqg^*i33h@$s(b416)*$(--8$8e1w3ne_cssf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,14 +78,14 @@ WSGI_APPLICATION = 'project_01.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'it63070224_dev',
-        'USER': 'it63070224_dev',
-        'PASSWORD': 'Kaozaa0089',
-        'HOST': 'ihost.it.kmitl.ac.th',
-        'PORT': '3306'
-    }
+    'default': dj_database_url.config(default='postgres://srmpmhxprnfvbz:4eec2d5c4c0dbb0c28dce42076b04cdcfcd3098212509cd29a8eb3291762682c@ec2-35-174-118-71.compute-1.amazonaws.com:5432/d58mdmmi92ucq8', conn_max_age=600, ssl_require=True)
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'it63070224_dev',
+    #     'USER': 'it63070224_dev',
+    #     'PASSWORD': 'Kaozaa0089',
+    #     'HOST': 'ihost.it.kmitl.ac.th',
+    #     'PORT': '3306'
+    # }
 }
 
 

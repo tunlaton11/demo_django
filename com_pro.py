@@ -1,143 +1,52 @@
-# Prog-03: Card Game
+# Prog-05: The 24 Game
 # 6???????21 Name ?
 
-
-import time
-import random
+from itertools import permutations, product
 import math
 
-def generate_deck(n_cards, n_shuffles):
-    print('Shuffle', end='')
-    deck = ''
-    for suit in 'CDHS':
-        for face in 'A23456789TJQK':
-            deck += '|' + face + suit + '|'
-    for i in range(n_shuffles):
-        deck = cut(deck, random.randint(0,n_cards))
-        deck = shuffle(deck)
-        time.sleep(0.1)
-        print('.', end='')
-    print()
-    return deck[:4*n_cards]
-
-def play(n_cards):
-    print('Start a card game.')
-    deck = generate_deck(n_cards, 20)
-
-    p1, deck = deal_n_cards(deck, 5)
-    p2, deck = deal_n_cards(deck, 5)
-    players = [p1, p2]
-    
-    table_cards, deck = deal_n_cards(deck, 1)
-    fail = False
-    turn = 0
-    
-    while True:
-        show_table_cards(table_cards, 10)
-        show_player_cards(players[turn], turn+1)
-        k = select_card_number(players[turn])
-        valid = (k != 0)
-        if valid:
-            cards = players[turn]
-            card = peek_kth_card(cards, k)
-            valid = eq_suit_or_value(card, table_cards[-4:])
-            if valid:
-                table_cards += card
-                players[turn] = remove_kth_card(cards, k)
-                fail = False
-        if not valid:
-            print('  ** Invalid **')
-            if len(deck) == 0:
-                if fail: break
-                fail = True
-            if len(deck) > 0:
-                print('  >> get a new card')
-                card, deck = deal_n_cards(deck, 1) 
-                players[turn] = card + players[turn]
-                
-        show_player_cards(players[turn], turn+1)
-        if len(players[turn]) == 0: break
-        turn = (turn + 1) % len(players)
-
-    if len(deck) == 0:
-        print('\n** No more cards **')
-    print('*****************')
-    if len(deck) == 0 and \
-         len(players[0]) == len(players[1]):
-            print('Draw!!!')
-    elif len(players[0]) < len(players[1]):
-        print('Player # 1 win!!!')
-    else:
-        print('Player # 2 win!!!')        
-
-def eq_suit_or_value(card1, card2):
-    return card1[1] == card2[1] or \
-                 card1[2] == card2[2]
-
-def show_player_cards(cards, k):
-    print('  Player #', k, ':', cards)
-
-def input_int(prompt):
-    while True:
+def generate_all_combinations(num_list, operators):
+    all_combi = []
+    for n,o in product(sorted(set(permutations(num_list))),
+                                product(operators, repeat=3)):
+        x = [None]*(len(n)+len(o))
+        x[::2] = n
+        x[1::2] = o
+        all_combi.append(x)
+    return all_combi
+#---------------------------------------------------------
+def cal(i):
+    case1 = '(('+i[0]+i[1]+i[2]+')'+i[3]+i[4]+')'+i[5]+i[6]
+    case2 = '('+i[0]+i[1]+'('+i[2]+i[3]+i[4]+'))'+i[5]+i[6]
+    case3 = '('+i[0]+i[1]+i[2]+')'+i[3]+'('+i[4]+i[5]+i[6]+')'
+    case4 = i[0]+i[1]+'(('+i[2]+i[3]+i[4]+')'+i[5]+i[6]+')'
+    case5 = i[0]+i[1]+'('+i[2]+i[3]+'('+i[4]+i[5]+i[6]+"))"
+    case_check = [case1, case2, case3, case4, case5]
+    for j in case_check:
         try:
-            return int(input(prompt))
-        except:
-            pass
+            eval(j)
+        except ZeroDivisionError: #except divided by zero case
+            continue
+        if eval(j) == 24:
+            return " ".join(j) + " = 24"
 
-def select_card_number(cards):
-    n = len(cards)//4
-    k = input_int('  Select card # (1-'+ str(n)+') : ')
-    if not(1 <= k <= n): k = 0
-    return k
-#---------------------------------------
-def peek_kth_card(cards, k):
-    cards_split = cards.split("|")
-    cards_split = list(filter(("").__ne__,cards_split))
-    the_kth_card = "|" + cards_split[k - 1] + "|"
-
-    return the_kth_card
-#---------------------------------------
-def remove_kth_card(cards, k):
-    del_cards = peek_kth_card(cards, k)
-    new_cards = cards.replace(del_cards, "")
-
-    return new_cards
-#---------------------------------------
-def deal_n_cards(deck, n):
-    deck_split = deck.index("|", n*4 % len(deck))
-    cards = deck[0: deck_split]
-    new_deck = deck[deck_split:]
-
-    return cards, new_deck
-#---------------------------------------
-def cut(deck, m):
-    move_card = deal_n_cards(deck, m)
-    new_deck = move_card[1] + move_card[0]
+        else:
+            continue
 
 
-    return new_deck
-#---------------------------------------
-def shuffle(deck):
-    front_deck = deck[0: math.ceil((len(deck)/4) / 2) * 4]
-    rear_deck = deck.replace(front_deck, "")
-    front_split = list(filter(("").__ne__,front_deck.split("|")))
-    rear_split = list(filter(("").__ne__,rear_deck.split("|")))
-    new_deck = [None] * (len(front_split) + len(rear_split))
-    new_deck[::2], new_deck[1::2] = front_split, rear_split
-
-    new_deck = "|" + '||'.join(new_deck) + "|"
+#---------------------------------------------------------
+nums = input('Enter 4 integers: ')
+num_split = nums.split( )
 
 
-    return new_deck
-#---------------------------------------
-def show_table_cards(cards, m):
-    right_card = cards[(m * -4):]
-    space_range = int(len(cards) / 4) - m
-    check_dot = int((space_range*2)//((space_range*2)-0.1))
-    fill_line = int(len(right_card)/4) + check_dot
-
-    print('-------'+'----'*fill_line)
-    print('Table: '+'....'*check_dot + right_card)
-    print('-------'+'----'*fill_line)
-#-----------------------------------------    
-play(51)
+cases = generate_all_combinations( num_split, '+-*/' )
+check_result = 0
+for i in cases:
+    result = cal(i)
+    if result == None:
+        continue
+    else:
+        print(result)
+        check_result += 1
+        break
+if check_result == 0:
+    print("No Solutions")
