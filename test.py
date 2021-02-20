@@ -1,13 +1,5 @@
+def cal(i):
+    case1 = ['(','(',i[0],i[1],i[2],')',i[3],i[4],')',i[5],i[6]]
+    return "".join(case1)
 
-def check(i):
-    for j in i:
-        try:
-            j
-        except ZeroDivisionError:
-            continue
-        if j == 24:
-            return True
-        else:
-            continue 
-
-print(check([1, 3, 3/0, 24]))
+print(cal(['1', '+', '2', '+', '3', '+', '4']))

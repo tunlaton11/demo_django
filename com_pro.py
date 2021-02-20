@@ -15,18 +15,19 @@ def generate_all_combinations(num_list, operators):
     return all_combi
 #---------------------------------------------------------
 def cal(i):
-    case1 = '(('+i[0]+i[1]+i[2]+')'+i[3]+i[4]+')'+i[5]+i[6]
-    case2 = '('+i[0]+i[1]+'('+i[2]+i[3]+i[4]+'))'+i[5]+i[6]
-    case3 = '('+i[0]+i[1]+i[2]+')'+i[3]+'('+i[4]+i[5]+i[6]+')'
-    case4 = i[0]+i[1]+'(('+i[2]+i[3]+i[4]+')'+i[5]+i[6]+')'
-    case5 = i[0]+i[1]+'('+i[2]+i[3]+'('+i[4]+i[5]+i[6]+"))"
+    case1 = ['(','(',i[0],i[1],i[2],')',i[3],i[4],')',i[5],i[6]]
+    case2 = ['(',i[0],i[1],'(',i[2],i[3],i[4],')',')',i[5],i[6]]
+    case3 = ['(',i[0],i[1],i[2],')',i[3],'(',i[4],i[5],i[6],')']
+    case4 = [i[0],i[1],'(','(',i[2],i[3],i[4],')',i[5],i[6],')']
+    case5 = [i[0],i[1],'(',i[2],i[3],'(',i[4],i[5],i[6],')',')']
     case_check = [case1, case2, case3, case4, case5]
     for j in case_check:
         try:
-            eval(j)
+            eval("".join(j))
         except ZeroDivisionError: #except divided by zero case
             continue
-        if eval(j) == 24:
+        if eval("".join(j)) == 24:
+            
             return " ".join(j) + " = 24"
 
         else:
