@@ -120,14 +120,16 @@ def encode_EAN13(digits):
 
 
 def decode_EAN13(codes):
+    group_1, group_2 = codes[3:45], codes[50:92]
+    if patterns_of(group_1) == 'GGGGGG': #check flip pattern
+            group_1 = group_2[::-1], group_2 = group_1[::-1]
     for i in codes:
         if not i.isdigit() or i not in ('0','1'): #1 check is digit or equal to 0,1 ?
             return ''
-    if len(codes) == 95: #2. check length equal to 95 ?
-        if digits_of(codes[3:45]) == '' or digits_of(codes[50:92]) == '': #3. check codes can find values?
+    if len(codes) == 95: #2. check length equal to 95 ?        
+        if digits_of(group_1) == '' or digits_of(group_2) == '': #3. check codes can find values?
             return ''
         else: 
-            group_1, group_2 = codes[3:45], codes[50:92]
             num = str(pattern_L_G.index(patterns_of(group_1))) + digits_of(group_1) + digits_of(group_2)
             if check_digit(num[0: 12]) == num[12]: #4. check digit is correct ?
                 return num
