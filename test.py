@@ -1,109 +1,39 @@
-L_codes = ['0001101', '0011001', '0010011', '0111101', '0100011', \
-           '0110001', '0101111', '0111011', '0110111', '0001011']
-G_codes = ['0100111', '0110011', '0011011', '0100001', '0011101', \
-           '0111001', '0000101', '0010001', '0001001', '0010111']
-R_codes = ['1110010', '1100110', '1101100', '1000010', '1011100', \
-           '1001110', '1010000', '1000100', '1001000', '1110100']
+import random
+import string
 
-pattern_L_G = ['LLLLLL', 'LLGLGG', 'LLGGLG', 'LLGGGL', 'LGLLGG', \
-               'LGGLLG', 'LGGGLL', 'LGLGLG', 'LGLGGL', 'LGGLGL' ]
+def setOfWords():
+    words = [''.join(random.choices(string.ascii_uppercase,k=random.randint(3,7))) for x in range(500)]
+    return set(words)
 
+def createBooks(shelf):
+    allWords = list(setOfWords())
+    for i in range(1000):
+        page = str(random.randrange(99,888))
 
-def codes_of(digits, patterns):
-    codes = ''
-    for i, j in zip(digits,patterns):
-        if j == 'L':
-            codes += L_codes[int(i)]
-        elif j == 'G':
-            codes += G_codes[int(i)]
-        elif j == 'R':
-            codes += R_codes[int(i)]
-    return codes
+    titleToken = random.sample(allWords,random.randint(3,5)) 
+    postfix = random.randint(0,len(titleToken)-1)
+    if random.choice([1,2,3,4,5]) == 3:
+        titleToken[postfix]  =titleToken[postfix] + '\'s'  
+    title = ' '.join(titleToken)
+    title = title.capitalize()
+    shelf.write(':'.join([title,page])+'\n')
 
+shelf = open('book_shelf.txt','w')
+createBooks(shelf)
+shelf.close()
 
-
-def digits_of(codes):
-    digits = ''
-    check_digits = ''
-    for i in range(0, len(codes), 7):
-        check_digits += (codes[i : i + 7])
-        if check_digits in L_codes:
-            digits += str(L_codes.index(check_digits))
-        elif check_digits in G_codes:
-            digits += str(G_codes.index(check_digits))
-        elif check_digits in R_codes:
-            digits += str(R_codes.index(check_digits))
+# เปิด file book_shelf.txt และ หาจำนวนหน้าเฉลี่ยต่อเล่ม ของหนังสือทุกเล่มซึ่งมี postfix 's อยู่ในชื่อ
+## Your code begins here ##
+def book_postfix(book_read):    
+    book_name = book_read[0:book_read.find(":")].split(' ')
+    for i in book_name:
+        if i[-2:] == '\'s':
+            return 'Book: '+ i + '\nHas: ' + book_read[book_read.index(':') + 1:]
         else:
-            digits = ''
-            break
-        check_digits = ''
-    return digits
+            continue
+    return 'not found postfix \'s book'
 
-
-
-def patterns_of(codes):
-    patterns = ''
-    check_patterns = ''
-    for i in range(0, len(codes), 7):
-        check_patterns += (codes[i : i + 7])
-        if check_patterns in L_codes:
-            patterns += 'L'
-        elif check_patterns in G_codes:
-            patterns += 'G'
-        elif check_patterns in R_codes:
-            patterns += 'R'
-        else:
-            patterns = ''
-            break
-        check_patterns = ''
-    return patterns
-
-
-
-def check_digit(digits):
-    check_digit = 0
-    check_sum = 0
-    check_product = '131313131313'
-    for i, j in zip(digits, check_product):
-        check_sum += int(i) * int(j)        
-    if check_sum % 10 == 0:
-        check_digit = 0
-    else:
-        check_digit += ((check_sum // 10) * 10 + 10) - check_sum
-        
-    return str(check_digit)
-
-
-
-def encode_EAN13(digits):
-    for i in digits: #check is digits ?
-        if not i.isdigit():
-            return ''
-    if len(digits) == 13: #check length equal to 13 ?
-        if check_digit(digits[0: 12]) == digits[12]: #check digit is correct ?
-            group_1 = codes_of(digits[1:7], pattern_L_G[int(digits[0])])
-            group_2 = codes_of(digits[7:], 'RRRRRR')
-            return '101' + group_1 + '01010' + group_2 + '101'
-        else:
-            return ''
-    else:
-        return ''
-
-def decode_EAN13(codes):
-    for i in codes:
-        if not i.isdigit() or i not in ('0','1'): #1 check is digit or equal to 0,1 ?
-            return ''
-    if len(codes) == 95: #2. check length equal to 95 ?
-        if digits_of(codes[3:45]) == '' or digits_of(codes[50:92]) == '': #3. check codes can find values?
-            return ''
-        else: 
-            group_1, group_2 = codes[3:45], codes[50:92]
-            num = str(pattern_L_G.index(patterns_of(group_1))) + digits_of(group_1) + digits_of(group_2)
-            if check_digit(num[0: 12]) == num[12]: #4. check digit is correct ?
-                return num
-            else:
-                return ''
-    else:
-        return ''
-
-print(check_digit('321429224519')) #3214292245192
+book = open('book_shelf.txt','r')
+book_read = book.read()
+print(book_postfix(book_read))
+book.close()
